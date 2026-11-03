@@ -98,6 +98,7 @@ nav:
       - Funcionais (IA): requisitos/ia.md
       - Não Funcionais: requisitos/nao-funcionais.md
       - Backlog: requisitos/backlog.md
+  - Arquitetura (provisória): arquitetura.md
   - Qualidade:
       - Riscos: riscos.md
       - Métricas de Sucesso: metricas.md
