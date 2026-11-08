@@ -99,6 +99,8 @@ nav:
       - Não Funcionais: requisitos/nao-funcionais.md
       - Backlog: requisitos/backlog.md
   - Arquitetura (provisória): arquitetura.md
+  - Entregas:
+      - Semana 2 (RAG de Nutrição): entregas/semana-2.md
   - Qualidade:
       - Riscos: riscos.md
       - Métricas de Sucesso: metricas.md
