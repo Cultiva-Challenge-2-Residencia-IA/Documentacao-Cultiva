@@ -3,9 +3,12 @@
 !!! warning "Versão provisória"
     Esta arquitetura é uma **proposta inicial**, ainda não validada pela equipe. Ela reúne as decisões discutidas até agora (RAG, multiagentes, multimodal, guardrails, LLMOps e observabilidade) e deve mudar conforme os testes, o golden set e as escolhas de plataforma e provedor. Itens marcados como "a definir" nas [Pendências](pendencias.md) continuam em aberto.
 
-## O que já está implementado (Nutrição, semana 2)
+## O que já está implementado (Nutrição)
 
-A entrega da semana 2 ([PR #30](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/30)) implementou o RAG da aba Nutrição no repositório [CultivaProjetoFase1](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1). Os diagramas desta seção separam o que existe em código (verde) do que segue como proposta (âmbar tracejado). O resumo da entrega está em [Entregas > Semana 2](entregas/semana-2.md).
+Atualizado em 12/11/2026. A entrega da semana 2 ([PR #30](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/30)) implementou o RAG da aba Nutrição no repositório [CultivaProjetoFase1](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1). Os diagramas desta seção separam o que existe em código (verde) do que segue como proposta (âmbar tracejado). O resumo da entrega está em [Entregas > Semana 2](entregas/semana-2.md), e as mudanças posteriores, em [Histórico](historico.md).
+
+!!! note "Diagrama anterior ao PR #42"
+    O diagrama do fluxo ainda mostra o reranker por sobreposição de termos e nível de evidência. Desde o [PR #42](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/42), ele fica desligado por padrão, e a busca usa RRF puro sobre BM25 + ChromaDB. A tabela abaixo descreve o estado atual.
 
 ### Fluxo de uma mensagem na aba Nutrição
 
@@ -25,23 +28,26 @@ A entrega da semana 2 ([PR #30](https://github.com/Cultiva-Challenge-2-Residenci
 |---|---|---|
 | Catálogo de fontes | 22 documentos-fonte em PDF com origem, licença, versão, SHA-256, tipo (`source_type`) e `approval_status`. Substitui o `sources.yaml` previsto. | `corpus/manifest.yaml` |
 | Conversão | PDF para Markdown com marcador por página física, OCR em páginas sem texto e relatório de cobertura. | `corpus/scripts/convert_pdfs.py` |
-| Verificação | Recalcula a cadeia de hashes (PDF, Markdown, script, configuração) e falha se algo mudou sem regeneração. Roda no CI. | `corpus/scripts/verify_corpus.py` |
-| Chunking | Limpeza e divisão em Trechos de cerca de 1.000 caracteres (máximo 1.400), sem atravessar página nem seção. Resultado: 1873 Trechos em JSONL, 1818 deles de fontes aprovadas, validados por JSON Schema no CI. | `corpus/scripts/prepare_rag.py` |
+| Verificação | Recalcula a cadeia de hashes (PDF, Markdown, script, configuração) e falha se algo mudou sem regeneração. Também confere os Trechos contra o manifesto e a origem: um `approval_status` alterado sem regenerar os Trechos faz o CI falhar (PR #37). | `corpus/scripts/verify_corpus.py`, `verify_trechos.py` |
+| Chunking | Limpeza e divisão em Trechos de cerca de 1.000 caracteres (máximo 1.400), sem atravessar página nem seção. Resultado: 1872 Trechos em JSONL, 1817 deles de fontes aprovadas, validados por JSON Schema no CI. A limpeza preserva a separação entre palavras com itálico colado (PR #38) e descarta títulos inválidos no campo `secao` (PR #43). | `corpus/scripts/prepare_rag.py` |
 | Contrato corpus e retriever | `trecho_para_chunk` converte o Trecho, adiciona um cabeçalho contextual e deriva o nível de evidência do tipo da fonte (heurística a calibrar). | ADR 0002, `src/rag/contrato.py` |
 | Gate de aprovação | Por padrão só fontes `aprovado` entram no índice. Hoje são 21 de 22 fontes. Pendentes só entram com `CULTIVA_INCLUIR_PENDENTES=true`. | `src/rag/corpus_loader.py` |
 | Embeddings | `paraphrase-multilingual-MiniLM-L12-v2`, 384 dimensões, rodando localmente com `fastembed` (ONNX). Nenhum texto sai da máquina (RNF05). | `src/retrieval/vector_store.py` |
-| Banco vetorial | ChromaDB persistente com HNSW por cosseno. O nome da coleção leva a impressão digital do modelo e dos Trechos, então mudar o corpus cria uma coleção nova. | `src/retrieval/vector_store.py` |
-| Recuperação híbrida | BM25 com sinônimos clínicos e busca densa, fundidos por Reciprocal Rank Fusion, seguidos de reranker (sobreposição de termos e nível de evidência) e de no máximo 2 Trechos por fonte. Devolve os 4 melhores. | `src/retrieval/hybrid_retriever.py` |
+| Banco vetorial | ChromaDB persistente com HNSW por cosseno, `ef_construction` e `ef_search` em 200 para a busca ser determinística (PR #33). O nome da coleção leva a impressão digital do modelo e dos Trechos, então mudar o corpus cria uma coleção nova. | `src/retrieval/vector_store.py` |
+| Recuperação híbrida | BM25 com sinônimos clínicos e busca densa no ChromaDB, fundidos por Reciprocal Rank Fusion, com no máximo 2 Trechos por fonte. Devolve os 4 melhores. O reranker (sobreposição de termos e nível de evidência) e a mistura com TF-IDF/LSA estão desligados por padrão desde o PR #42: o reranker pesava cerca de 11 vezes a fusão e decidia o ranking sozinho. | `src/retrieval/hybrid_retriever.py`, `src/config.py` |
 | Guardrails | Entrada: pedidos de dieta, dose ou diagnóstico são reenquadrados para evidência populacional (Lei 8.234/1991, RN01). Saída: remove linguagem prescritiva. | `src/agent/guardrails.py` |
 | Citações | Cada resposta traz fonte, seção, página do PDF, link, licença e status de aprovação (RN04, RN17). | `src/demo_entrega.py` |
-| CI | Lint (ruff), testes (pytest) e integridade do corpus bloqueiam o merge. Os gates de avaliação (RNF09) comparam o benchmark com o baseline do `main` e, por ora, são informativos. | `.github/workflows/ci.yml`, `eval/gates.toml` |
+| Avaliação | Benchmark v1 (16 perguntas, gate do CI) e benchmark v2 (42 casos com Trecho e página esperados, `dev` e `test`, PR #40). Script de ablação para comparar configurações de ranking no mesmo índice (PR #42). | `src/evaluation/`, `eval/golden/v2/` |
+| CI | Lint (ruff), testes (pytest) e integridade do corpus bloqueiam o merge. Os gates de avaliação (RNF09) comparam o benchmark v1 com o baseline do `main` e, por ora, são informativos. | `.github/workflows/ci.yml`, `eval/gates.toml` |
 
-Benchmark offline, sem LLM, nas 16 perguntas atuais: recall@4 por fonte de 91,7%, MRR de 0,750, cobertura de termos de 88,1% e guardrail legal com 100%. O conjunto é pequeno (só 3 armadilhas de prescrição) e não serve para afirmar robustez.
+Benchmark v1, offline e sem LLM, nas 16 perguntas (12 entram na média de recall): recall@4 por fonte de 91,7%, MRR de 0,778, cobertura de termos de 92,5% e guardrail legal com 100%. O conjunto é pequeno (só 3 armadilhas de prescrição) e não serve para afirmar robustez.
+
+Benchmark v2, nos 26 casos com recuperação: acerto de Trecho no top-4 de 96,2%, MRR por Trecho de 0,814 e nDCG de 0,464. O guardrail detecta só 3 de 7 pedidos de prescrição (recall de 42,9%) e a TACO acerta 2 de 3 alimentos. A falha do guardrail está na issue #39; a da TACO, que só reconhece uma lista fixa de cerca de 25 alimentos, ainda não tem issue.
 
 ### Diferenças em relação à proposta
 
 - O banco vetorial é **ChromaDB**, não pgvector. A escolha final segue em aberto.
-- O **detector de risco** com acolhimento fixo (CVV 188) **ainda não existe** (issue #9). Por isso o fluxo implementado não cumpre o RF-IA03 nem o RNF29.
+- O **detector de risco** com acolhimento fixo (CVV 188) **ainda não está na `main`** (issue #9, em revisão no PR #41). Por isso o fluxo implementado não cumpre o RF-IA03 nem o RNF29.
 - Roteamento entre abas, projetor de contexto, agente sincronizador e Langfuse seguem como proposta.
 - A síntese usa LLM (Groq ou Ollama) quando configurado. Sem chave, a resposta é extrativa e determinística, sempre a partir dos mesmos Trechos.
 

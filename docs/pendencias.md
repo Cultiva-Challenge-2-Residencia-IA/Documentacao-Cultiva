@@ -15,7 +15,7 @@
 
 ## RAG de Nutrição
 
-Itens levantados na [entrega da semana 2](entregas/semana-2.md).
+Itens levantados na [entrega da semana 2](entregas/semana-2.md), atualizados em 12/11/2026. O que mudou desde então está no [Histórico](historico.md), e as decisões, no [Registro de decisões](decisoes.md).
 
 - [x] Definir o **esquema do catálogo de fontes**: resolvido pelo `corpus/manifest.yaml` do CultivaProjetoFase1, que substitui o `sources.yaml` previsto
 - [x] Escolher os **embeddings** iniciais: `paraphrase-multilingual-MiniLM-L12-v2`, local, sem envio de texto a terceiros (RNF05)
@@ -24,7 +24,12 @@ Itens levantados na [entrega da semana 2](entregas/semana-2.md).
 - [ ] Decidir o **banco vetorial definitivo**: ChromaDB na implementação, pgvector na proposta
 - [x] **Aprovar as fontes**: 21 de 22 aprovadas no PR #31 (issue #8)
 - [ ] Decidir sobre a **SBAN**, pendente por possível conflito de interesse (material com marca da Nestlé)
-- [ ] **Recuperar o MRR**: caiu de 0,9688 para 0,750 com o corpus curado; calibrar o reranker (issue #13)
-- [ ] **Incluir os resumos do PubMed** sem que o reranker penalize textos em inglês (issue #28)
+- [x] **Recuperar o MRR**: o reranker por sobreposição de termos decidia o ranking sozinho; com RRF puro, o MRR do v1 foi de 0,750 para 0,778 ([PR #42](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/42), issue #35). O ganho é pequeno e precisa ser confirmado num conjunto novo
+- [ ] **Incluir os resumos do PubMed** (issue #28). O reranker que favorecia textos em português foi desligado no [PR #42](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/42), então resta decidir se entram no manifesto
 - [ ] Decidir se as **sínteses de `seed_guidelines`** voltam ao índice: hoje ficam fora por não terem origem verificável
-- [ ] Implementar o **detector de risco** com CVV 188 (issue #9, RF-IA03)
+- [ ] Implementar o **detector de risco** com CVV 188 (issue #9, RF-IA03): em revisão no [PR #41](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/41), ainda abaixo do recall mínimo de 0,95 em frases que não orientaram as regras
+- [x] **Benchmark v2** com Trecho e página esperados e `dev`/`test` separados ([PR #40](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/40), issue #13)
+- [ ] Trocar o **gate do CI do benchmark v1 para o v2**
+- [ ] Decidir o **provedor de LLM** (Groq ou Ollama) frente ao RNF05 (issue #16): proposta de Ollama local como padrão no [PR #45](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/45)
+- [ ] Definir os **critérios de busca e seleção de novas fontes** para o corpus (issue #47)
+- [ ] Revisar os **22 julgamentos de Trecho** acrescentados ao golden set v2 no [PR #42](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/42), ainda sem revisão humana
