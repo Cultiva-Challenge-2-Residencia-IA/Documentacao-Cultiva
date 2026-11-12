@@ -101,10 +101,12 @@ nav:
   - Arquitetura (provisória): arquitetura.md
   - Entregas:
       - Semana 2 (RAG de Nutrição): entregas/semana-2.md
+      - Histórico de mudanças: historico.md
   - Qualidade:
       - Riscos: riscos.md
       - Métricas de Sucesso: metricas.md
   - Decisões:
+      - Registro de decisões: decisoes.md
       - Guiding Questions: guiding-questions.md
       - Pendências: pendencias.md
   - Equipe: equipe.md

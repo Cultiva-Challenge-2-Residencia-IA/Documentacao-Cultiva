@@ -2,6 +2,9 @@
 
 Entrega de 09/11/2026. Código no [PR #30](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/30) e aprovação das fontes no [PR #31](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/31), do repositório CultivaProjetoFase1. O documento completo da entrega, com a tabela das 22 fontes e o log da demonstração, está em [`docs/entrega-rag-nutricao.md`](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/docs/entrega-rag-nutricao.md).
 
+!!! abstract "Retrato da entrega"
+    Esta página descreve o sistema como foi entregue em 09/11/2026 e não é atualizada. O que mudou depois (por exemplo, o ranking e o MRR) está em [Histórico de mudanças](../historico.md).
+
 !!! info "Classificação"
     O que está aqui é **implementação** da aba Nutrição. As escolhas técnicas (ChromaDB, modelo de embeddings, pesos do reranker) são **propostas técnicas** ainda não validadas pela equipe nem calibradas no golden set. A visão geral está em [Arquitetura](../arquitetura.md).
 
@@ -14,7 +17,7 @@ Entrega de 09/11/2026. Código no [PR #30](https://github.com/Cultiva-Challenge-
 | Estratégia de embeddings | `paraphrase-multilingual-MiniLM-L12-v2`, 384 dimensões, local via `fastembed` (RNF05) | `src/retrieval/vector_store.py` |
 | Banco vetorial | ChromaDB persistente, HNSW por cosseno, coleção versionada pela impressão digital do corpus e do modelo | `src/retrieval/vector_store.py` |
 | Demonstração com fontes | 3 consultas com Trechos, página do PDF, resposta e citações | `src/demo_entrega.py`, `entrega_semanal/` |
-| Diagramas de arquitetura e de ingestão | Diagramas em [Arquitetura](../arquitetura.md#o-que-ja-esta-implementado-nutricao-semana-2) | `docs/assets/arquitetura/` |
+| Diagramas de arquitetura e de ingestão | Diagramas em [Arquitetura](../arquitetura.md#o-que-ja-esta-implementado-nutricao) | `docs/assets/arquitetura/` |
 
 ## Base de conhecimento
 

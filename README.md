@@ -68,6 +68,17 @@ A cada push na branch `main`, o workflow `.github/workflows/docs.yml` executa `m
 2. Confira o resultado com `mkdocs serve`.
 3. Use [Conventional Commits](https://www.conventionalcommits.org/pt-br/) nas mensagens (`docs:`, `feat:`, `fix:`, `chore:`).
 4. Abra um pull request ou faça push na `main`, conforme o combinado com a equipe.
+5. Antes de abrir o PR, rode `mkdocs build --strict`: ele falha se houver link ou âncora quebrados.
+
+### Mantendo a documentação em dia com o código
+
+O código fica no [CultivaProjetoFase1](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1). Quando um PR for mesclado lá:
+
+- acrescente uma linha em `docs/historico.md`, com data, link do PR e o que mudou;
+- se houver decisão (com data e responsável), acrescente-a em `docs/decisoes.md`, marcando se é decisão da equipe ou proposta técnica;
+- se mudar algo que aparece aqui (métricas, número de fontes ou Trechos, componentes implementados), atualize `docs/arquitetura.md` e `docs/pendencias.md`.
+
+As páginas de entrega (`docs/entregas/`) são o retrato de cada entrega e não são reescritas depois.
 
 ## Equipe (Grupo 12)
 
