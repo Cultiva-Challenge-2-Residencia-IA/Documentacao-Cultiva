@@ -8,13 +8,15 @@ O que mudou no repositório de código [CultivaProjetoFase1](https://github.com/
 
 | PR | Assunto | Situação em 12/11/2026 |
 |---|---|---|
-| [#41](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/41) | Detector de risco com acolhimento fixo (CVV 188), defesa contra prompt injection e máscara de dados pessoais (issue #9, RF-IA03, RNF04, RNF05) | Mudanças solicitadas na revisão: num lote de frases escrito sem olhar as regras, o detector acionou em 20 de 30 casos de risco (recall 0,667, abaixo do mínimo de 0,95) |
-| [#45](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/45) | Ollama local como provedor padrão de geração, com a Groq desativada por padrão (ADR 0003) | Aberto |
+| [#51](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/51) | Resposta "não sei" quando o corpus não tem evidência (issue #6, RF-IA01) | Mudanças solicitadas: recusa perguntas que o corpus responde, como "Jejum intermitente funciona?" (exemplo da persona Rafael), porque o sinal olha só o cosseno do ChromaDB |
 
 ### Mesclados
 
 | Data | PR | O que mudou |
 |---|---|---|
+| 12/11/2026 | [#45](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/45) | LLM: Ollama local passa a ser o provedor padrão; a Groq só é usada com `LLM_PROVIDER=groq`, `ALLOW_EXTERNAL_LLM=true` e chave (ADR 0003). Só a pergunta do usuário é mascarada antes de ir ao modelo; Trechos, TACO e grafo seguem intactos. |
+| 12/11/2026 | [#49](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/49) | Avaliação: um lote de frases de risco escrito às cegas vira o holdout do detector. Recall de **0,133** (4 de 30), sem falsos positivos: o RF-IA03 não está cumprido. O gate do holdout aparece como falha conhecida (aviso com o número real) e volta a falhar se cair abaixo de 0,1333. |
+| 12/11/2026 | [#41](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/41) | Segurança: portão de risco por léxico com mensagem fixa de acolhimento (CVV 188, SAMU 192), defesa contra prompt injection e máscara de dados pessoais (issue #9). O léxico acerta as frases que orientaram as regras, mas generaliza pouco para frases novas (ver #49); a camada semântica é a issue #48. |
 | 12/11/2026 | [#43](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/43) | Corpus: o campo `secao` dos Trechos é normalizado, e títulos inválidos vindos da extração (cedilhas separadas, referências entre colchetes, frases promovidas a título) são descartados. |
 | 10/11/2026 | [#44](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/44) | Avaliação: registra a decisão de não tratar o Fascículo 1 como equivalente ao Guia no benchmark v1. Fecha a issue #35. |
 | 10/11/2026 | [#42](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/42) | Busca: ranking padrão passa a ser RRF puro sobre BM25 + ChromaDB, com ablação de 9 variantes nos benchmarks v1 e v2. MRR do v1 de 0,750 para 0,778; MRR por Trecho do v2 de 0,740 para 0,814. Resultados desfavoráveis registrados (casos que pioram e queda de 2 p.p. na cobertura de termos do v2). |

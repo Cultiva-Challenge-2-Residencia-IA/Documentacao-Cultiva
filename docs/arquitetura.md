@@ -47,7 +47,8 @@ Benchmark v2, nos 26 casos com recuperação: acerto de Trecho no top-4 de 96,2%
 ### Diferenças em relação à proposta
 
 - O banco vetorial é **ChromaDB**, não pgvector. A escolha final segue em aberto.
-- O **detector de risco** com acolhimento fixo (CVV 188) **ainda não está na `main`** (issue #9, em revisão no PR #41). Por isso o fluxo implementado não cumpre o RF-IA03 nem o RNF29.
+- O **detector de risco** existe desde o PR #41, como portão por léxico antes da busca, com mensagem fixa de acolhimento (CVV 188, SAMU 192) e sem chamar o LLM. Mas o recall em frases novas é de 0,133 (PR #49), então o fluxo **não cumpre o RF-IA03**; a camada semântica é a issue #48. A defesa contra prompt injection e a máscara de dados pessoais vieram no mesmo PR.
+- O provedor de LLM padrão é o **Ollama local** (PR #45, ADR 0003); a Groq só com autorização explícita.
 - Roteamento entre abas, projetor de contexto, agente sincronizador e Langfuse seguem como proposta.
 - A síntese usa LLM (Groq ou Ollama) quando configurado. Sem chave, a resposta é extrativa e determinística, sempre a partir dos mesmos Trechos.
 
