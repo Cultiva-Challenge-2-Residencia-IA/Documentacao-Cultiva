@@ -99,6 +99,8 @@ nav:
       - Não Funcionais: requisitos/nao-funcionais.md
       - Backlog: requisitos/backlog.md
   - Arquitetura (provisória): arquitetura.md
+  - Agentes:
+      - Agente de Estudos: agentes/estudos.md
   - Entregas:
       - Semana 2 (RAG de Nutrição): entregas/semana-2.md
       - Histórico de mudanças: historico.md
