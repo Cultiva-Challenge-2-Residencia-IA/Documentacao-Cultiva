@@ -13,7 +13,7 @@ As metas serão definidas antes da avaliação final. Todo resultado deve inform
 - **% de respostas com fonte:** entre as que exigem fundamentação, também verificando se a fonte sustenta a afirmação.
 - **Utilidade e clareza:** notas de 1 a 5, separadas, com comentário opcional.
 - **Respostas sinalizadas como incorretas:** quantidade e proporção, revisadas para separar erros confirmados, dúvidas e sugestões.
-- **Benchmark contra outros modelos:** conjunto comum de tarefas do CULTIVA, avaliando correção, fundamentação, respeito aos limites, tempo e custo.
+- **Benchmark contra outros modelos:** conjunto comum de tarefas do CULTIVA, avaliando correção, fundamentação, respeito aos limites, tempo e custo. A primeira aplicação foi a [escolha do modelo local](qualidade/modelo-local.md).
 
 ## Decisão e impacto
 

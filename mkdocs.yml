@@ -105,6 +105,7 @@ nav:
   - Qualidade:
       - Riscos: riscos.md
       - Métricas de Sucesso: metricas.md
+      - Escolha do modelo local: qualidade/modelo-local.md
   - Decisões:
       - Registro de decisões: decisoes.md
       - Guiding Questions: guiding-questions.md

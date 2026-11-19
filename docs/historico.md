@@ -8,6 +8,7 @@ O que mudou no repositório de código [CultivaProjetoFase1](https://github.com/
 
 | PR | Assunto | Situação em 12/11/2026 |
 |---|---|---|
+| [#70](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/70) | Escolha do modelo local do Ollama (issue #55): `gemma4:e4b` como principal e `qwen3.5:9b` como reserva. Detalhes em [Escolha do modelo local](qualidade/modelo-local.md) | Aberto em 19/11/2026, aguardando revisão |
 | [#51](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/51) | Resposta "não sei" quando o corpus não tem evidência (issue #6, RF-IA01) | Mudanças solicitadas: recusa perguntas que o corpus responde, como "Jejum intermitente funciona?" (exemplo da persona Rafael), porque o sinal olha só o cosseno do ChromaDB |
 
 ### Mesclados
