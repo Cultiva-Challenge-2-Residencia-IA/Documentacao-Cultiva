@@ -31,7 +31,8 @@ Itens levantados na [entrega da semana 2](entregas/semana-2.md), atualizados em 
 - [x] **Benchmark v2** com Trecho e página esperados e `dev`/`test` separados ([PR #40](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/40), issue #13)
 - [ ] Trocar o **gate do CI do benchmark v1 para o v2**
 - [ ] Aprovar a decisão do **provedor de LLM** (issue #16): Ollama local virou o padrão no [PR #45](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/45) (ADR 0003, proposta técnica); antes de usar a Groq com dados reais, falta confirmar contrato de não treinamento, retenção zero e transferência internacional
-- [ ] Aplicar a **escolha do modelo local** (issue #55, [PR #70](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/70)): `gemma4:e4b` venceu a comparação, mas falta rodar de novo com o prompt da issue #12, medir a VRAM e registrar o ADR 0004 ([detalhes](qualidade/modelo-local.md))
-- [ ] Responder **"não sei"** sem recusar perguntas que o corpus responde (issue #6, [PR #51](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/51))
+- [x] Aplicar a **escolha do modelo local** (issue #55): `gemma4:e4b` com `qwen2.5:7b` de reserva, no [PR #80](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/80) (ADR 0004, proposta técnica)
+- [ ] Medir a **fidelidade do `gemma4:e4b` com o prompt atual** de citação por frase ([issue #67](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/issues/67)); até lá, só a forma das citações foi conferida ([detalhes](qualidade/modelo-local.md#conferencia-com-o-prompt-atual))
+- [x] Responder **"não sei"** sem recusar perguntas que o corpus responde (issue #6, [PR #51](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/51))
 - [ ] Definir os **critérios de busca e seleção de novas fontes** para o corpus (issue #47)
 - [ ] Revisar os **22 julgamentos de Trecho** acrescentados ao golden set v2 no [PR #42](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/42), ainda sem revisão humana

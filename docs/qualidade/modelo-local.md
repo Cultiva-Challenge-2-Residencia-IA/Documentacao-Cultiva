@@ -3,17 +3,17 @@
 Comparação dos modelos do Ollama que podem fazer a síntese do consultor de Nutrição ([issue #55](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/issues/55)). O código, os dados e o relatório completo estão no [PR #70](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/70), em `eval/modelo_local/`. Números de 19/11/2026.
 
 !!! warning "Proposta técnica"
-    Esta página registra a medição de 19/11/2026. A troca do modelo na configuração depende do ADR 0004 e é acompanhada na [issue #55](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/issues/55) e nas [Pendências](../pendencias.md). Os prompts medidos são anteriores à mudança de formato da issue #12 (ver [Limitações](#limitacoes)).
+    Esta página registra as medições de 19/11/2026. A decisão foi aplicada no [PR #80](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/80) e registrada no [ADR 0004](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/docs/adrs/0004-modelo-local-ollama.md), ainda sem aprovação formal da equipe. A comparação usou o prompt anterior à issue #12; a conferência com o prompt atual está em [Conferência com o prompt atual](#conferencia-com-o-prompt-atual).
 
 ## Resultado
 
-**Principal: `gemma4:e4b`. Reserva: `qwen3.5:9b`.**
+**Principal: `gemma4:e4b`. Reserva: `qwen2.5:7b`** (definida depois da [conferência com o prompt atual](#conferencia-com-o-prompt-atual)).
 
 | Posição | Modelo | Fidelidade | Cobertura de termos | Tempo típico (p50) |
 |---|---|---:|---:|---:|
 | 1º (principal) | `gemma4:e4b` | **94,1%** | 81,4% | **3,2 s** |
-| 2º (reserva) | `qwen3.5:9b` | 71,2% | 82,0% | 7,9 s |
-| 3º | `qwen2.5:7b` (referência) | 71,0% | 77,1% | 6,0 s |
+| 2º | `qwen3.5:9b` | 71,2% | 82,0% | 7,9 s |
+| 3º | `qwen2.5:7b` (referência; reserva) | 71,0% | 77,1% | 6,0 s |
 | 4º | `llama3.1:8b` | 69,1% | 76,4% | 5,2 s |
 | 5º | `mistral-nemo:12b` | 67,9% | 75,4% | 22,2 s |
 
@@ -21,7 +21,21 @@ Comparação dos modelos do Ollama que podem fazer a síntese do consultor de Nu
 - **Na cobertura, os cinco empatam.** Todos mencionam de 75% a 82% dos termos esperados, e nenhuma diferença é significativa.
 - **O gemma também é o mais rápido:** a resposta típica fica pronta em cerca de 3 segundos e a maioria (p95) em até 5,2 s, numa RTX 5060 de 8 GB.
 
-Abaixo do gemma, os outros quatro estão em empate técnico entre si, e a ordem segue a fidelidade da semente 1. O `qwen3.5:9b` ficou como reserva por uma margem simbólica sobre o `qwen2.5:7b` (71,2% contra 71,0%), e é mais lento que ele.
+Abaixo do gemma, os outros quatro estão em empate técnico entre si, e a ordem segue a fidelidade da semente 1. Pela regra combinada antes da medição, a reserva seria o 2º colocado, o `qwen3.5:9b`, por uma margem simbólica sobre o `qwen2.5:7b` (71,2% contra 71,0%). A conferência com o prompt atual mudou essa escolha (veja abaixo).
+
+## Conferência com o prompt atual
+
+A comparação usou o prompt anterior à issue #12. O prompt atual pede cada frase numa lista, com os números dos Trechos que a sustentam. Antes de trocar o modelo, os candidatos foram conferidos nesse formato, na RTX 5060, nos 30 casos do `dev` (`fundamentacao medir`, cada modelo sozinho):
+
+| Modelo | Citações válidas | Tempo típico | Pior caso comum (p95) | Memória de vídeo |
+|---|---:|---:|---:|---:|
+| `gemma4:e4b` | 88% (22 de 25) | 5,5 s | 9,7 s | 4,6 GB |
+| `qwen2.5:7b` | 92% (24 de 26) | 7,3 s | 9,0 s | 4,9 GB |
+| `qwen3.5:9b` | 81,5% (22 de 27) | 12,5 s | 19,8 s | 6,3 GB |
+
+- **"Citações válidas" mede a forma, não o conteúdo:** confere se cada frase cita um Trecho que existe, não se o Trecho diz aquilo (issue #67). A fidelidade de conteúdo continua sendo a da comparação acima, em que o gemma ficou 23 pontos à frente.
+- **Limite de saída:** com até 1.024 tokens de resposta, o gemma cortava o JSON no meio em 3 dos 30 casos. O consultor passou a usar até 2.048 tokens, e nenhuma resposta foi cortada.
+- **Reserva:** o `qwen2.5:7b` empata com o `qwen3.5:9b` em fidelidade e foi melhor nas três medidas com o prompt atual. Por isso, a reserva passou a ser o `qwen2.5:7b`, também uma decisão tomada depois de ver os resultados e registrada no ADR 0004.
 
 ## Como foi medido
 
@@ -127,21 +141,19 @@ Em 19/11/2026, depois de ver os resultados, a prescrição passou de eliminatór
 
 ## Limitações
 
-- **Prompt anterior à issue #12.** Os prompts foram congelados antes de o consultor passar a pedir citação por frase (`[T1]`, `TACO`, `GRAFO`) em JSON aninhado. O formato novo exige mais do modelo. Antes de trocar o modelo, é preciso congelar de novo e rodar ao menos os dois finalistas.
-- **VRAM do gemma não medida.** O Ollama informa 0,26 GB para ele, o que é impossível (os pesos têm 6,6 GB). A velocidade de 161 tokens/s indica que ele roda inteiro na GPU de 8 GB, mas o número exato fica para uma medição com `nvidia-smi` na RTX 5060.
+- **Prompt anterior à issue #12.** A fidelidade foi medida com o prompt antigo. Com o prompt atual, só a forma das citações foi conferida; a fidelidade do gemma nesse formato ainda não foi medida.
+- **Memória informada errada pelo Ollama.** O Ollama informa 0,26 GB para o gemma. O `nvidia-smi` mostrou 4,6 GB na RTX 5060, com contexto de 8.192 tokens.
 - **Máquina diferente em parte do mistral.** As sementes 2 e 3 do `mistral-nemo:12b` rodaram numa GTX 1650 de 4 GB, e por isso não entram em latência nem memória. Isso não muda o resultado, porque ele já estava em último.
 - **Amostra pequena.** Com 40 casos julgados, diferenças de poucos pontos aparecem como empate técnico.
 - **Juiz também é um modelo.** A concordância de 0,65 é boa, mas não perfeita, e não substitui revisão humana de uma amostra.
-- **Mudança de regra após os resultados.** A eliminatória de prescrição foi revista depois de ver os números. A decisão e o motivo estão registrados, e a contagem de prescrições continua no relatório.
+- **Mudanças de regra após os resultados.** A eliminatória de prescrição e a escolha da reserva foram revistas depois de ver os números. As decisões e os motivos estão registrados no ADR 0004, e a contagem de prescrições continua no relatório.
 
 ## O que a medição deixou em aberto
 
-Para aplicar o resultado, a comparação apontou quatro trabalhos. O andamento de cada um fica na [issue #55](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/issues/55) e nas [Pendências](../pendencias.md), não nesta página:
+Em 19/11/2026, o [PR #80](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/80) aplicou a troca: conferiu os modelos com o prompt atual, mediu a VRAM e registrou o ADR 0004. Ficaram dois trabalhos, acompanhados nas [Pendências](../pendencias.md):
 
-- rodar de novo os dois finalistas com o prompt da issue #12;
-- medir a VRAM do `gemma4:e4b` com `nvidia-smi`;
-- transformar as prescrições marcadas em casos de teste do guardrail de saída ([issue #39](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/issues/39));
-- registrar a decisão no ADR 0004 e trocar `OLLAMA_MODEL` e `OLLAMA_FALLBACK_MODEL`.
+- medir a fidelidade de conteúdo do `gemma4:e4b` com o prompt atual ([issue #67](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/issues/67));
+- transformar as prescrições marcadas em casos de teste do guardrail de saída ([issue #39](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/issues/39)).
 
 ## Onde está cada coisa
 
@@ -150,4 +162,5 @@ No repositório [CultivaProjetoFase1](https://github.com/Cultiva-Challenge-2-Res
 - `README.md`: protocolo completo e regra de decisão;
 - `resultados.md` e `resultados.json`: relatório gerado, com todas as métricas;
 - `resultados_explicados.md`: guia de leitura de cada coluna do relatório;
-- `juiz_concordancia.json`: concordância do juiz.
+- `juiz_concordancia.json`: concordância do juiz;
+- `fundamentacao_prompt_atual/`: a conferência com o prompt atual (PR #80).

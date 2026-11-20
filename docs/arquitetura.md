@@ -48,8 +48,8 @@ Benchmark v2, nos 26 casos com recuperação: acerto de Trecho no top-4 de 96,2%
 
 - O banco vetorial é **ChromaDB**, não pgvector. A escolha final segue em aberto.
 - O **detector de risco** existe desde o PR #41, como portão por léxico antes da busca, com mensagem fixa de acolhimento (CVV 188, SAMU 192) e sem chamar o LLM. Mas o recall em frases novas é de 0,133 (PR #49), então o fluxo **não cumpre o RF-IA03**; a camada semântica é a issue #48. A defesa contra prompt injection e a máscara de dados pessoais vieram no mesmo PR.
-- O provedor de LLM padrão é o **Ollama local** (PR #45, ADR 0003); a Groq só com autorização explícita.
-- Roteamento entre abas, projetor de contexto, agente sincronizador e Langfuse seguem como proposta.
+- O provedor de LLM padrão é o **Ollama local** (PR #45, ADR 0003), com `gemma4:e4b` e reserva `qwen2.5:7b` (PR #80, ADR 0004); a Groq só com autorização explícita.
+- A orquestração já é um grafo LangGraph (PR #77), com os portões de segurança antes de qualquer agente e Nutrição como único agente. O Langfuse existe como opção desligada por padrão (PR #74). Roteamento entre abas, projetor de contexto e agente sincronizador seguem como proposta.
 - A síntese usa LLM (Groq ou Ollama) quando configurado. Sem chave, a resposta é extrativa e determinística, sempre a partir dos mesmos Trechos.
 
 ## Proposta completa (provisória)

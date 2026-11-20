@@ -6,15 +6,17 @@ O que mudou no repositório de código [CultivaProjetoFase1](https://github.com/
 
 ### Em andamento
 
-| PR | Assunto | Situação em 12/11/2026 |
-|---|---|---|
-| [#70](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/70) | Escolha do modelo local do Ollama (issue #55): `gemma4:e4b` como principal e `qwen3.5:9b` como reserva. Detalhes em [Escolha do modelo local](qualidade/modelo-local.md) | Aberto em 19/11/2026, aguardando revisão |
-| [#51](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/51) | Resposta "não sei" quando o corpus não tem evidência (issue #6, RF-IA01) | Mudanças solicitadas: recusa perguntas que o corpus responde, como "Jejum intermitente funciona?" (exemplo da persona Rafael), porque o sinal olha só o cosseno do ChromaDB |
+Os PRs abertos e a situação de cada um ficam na [lista de pull requests](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pulls) do repositório de código. Esta página registra o que já foi mesclado.
 
 ### Mesclados
 
 | Data | PR | O que mudou |
 |---|---|---|
+| 19/11/2026 | [#77](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/77) | Orquestração: o fluxo do consultor vira um grafo LangGraph, com os portões de risco e de prompt injection antes de qualquer agente e Nutrição como subgrafo (issue #76). Respostas idênticas às de antes nos benchmarks v1 e v2. Base para o Agente de Saúde Física. |
+| 19/11/2026 | [#80](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/80) | LLM: o modelo local passa a `gemma4:e4b`, com `qwen2.5:7b` de reserva (ADR 0004), e as chamadas ao Ollama usam as condições da medição. Detalhes em [Escolha do modelo local](qualidade/modelo-local.md). |
+| 19/11/2026 | [#74](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/74) | Observabilidade: Langfuse opcional e desligado por padrão, com destino local, máscara de dados pessoais em todos os registros e o golden set como experimento (issue #46, parcial). A mensagem que o portão de risco detecta vai só com as categorias. |
+| 19/11/2026 | [#70](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/70) | Avaliação: comparação de 5 modelos locais com juiz às cegas (issue #55). |
+| 12/11/2026 | [#51](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/51) | RAG: resposta "não sei" quando a pergunta está fora do domínio, sem recusar perguntas que o corpus responde (issue #6, RF-IA01). |
 | 12/11/2026 | [#45](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/45) | LLM: Ollama local passa a ser o provedor padrão; a Groq só é usada com `LLM_PROVIDER=groq`, `ALLOW_EXTERNAL_LLM=true` e chave (ADR 0003). Só a pergunta do usuário é mascarada antes de ir ao modelo; Trechos, TACO e grafo seguem intactos. |
 | 12/11/2026 | [#49](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/49) | Avaliação: um lote de frases de risco escrito às cegas vira o holdout do detector. Recall de **0,133** (4 de 30), sem falsos positivos: o RF-IA03 não está cumprido. O gate do holdout aparece como falha conhecida (aviso com o número real) e volta a falhar se cair abaixo de 0,1333. |
 | 12/11/2026 | [#41](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/41) | Segurança: portão de risco por léxico com mensagem fixa de acolhimento (CVV 188, SAMU 192), defesa contra prompt injection e máscara de dados pessoais (issue #9). O léxico acerta as frases que orientaram as regras, mas generaliza pouco para frases novas (ver #49); a camada semântica é a issue #48. |
