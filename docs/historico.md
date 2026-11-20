@@ -12,6 +12,7 @@ Os PRs abertos e a situação de cada um ficam na [lista de pull requests](https
 
 | Data | PR | O que mudou |
 |---|---|---|
+| 20/11/2026 | [#57](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/57) | Avaliação: benchmark comparativo de respostas em 4 condições (LLM sem RAG, RAG extrativo, RAG atual e contexto ideal), com 36 casos e teste pareado. A LLM sobre os Trechos ganha da extrativa; RAG e LLM sem RAG empatam na régua de termos. Veja [Entregas > Semana 3](entregas/semana-3.md). |
 | 19/11/2026 | [#77](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/77) | Orquestração: o fluxo do consultor vira um grafo LangGraph, com os portões de risco e de prompt injection antes de qualquer agente e Nutrição como subgrafo (issue #76). Respostas idênticas às de antes nos benchmarks v1 e v2. Base para o Agente de Saúde Física. |
 | 19/11/2026 | [#80](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/80) | LLM: o modelo local passa a `gemma4:e4b`, com `qwen2.5:7b` de reserva (ADR 0004), e as chamadas ao Ollama usam as condições da medição. Detalhes em [Escolha do modelo local](qualidade/modelo-local.md). |
 | 19/11/2026 | [#74](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/74) | Observabilidade: Langfuse opcional e desligado por padrão, com destino local, máscara de dados pessoais em todos os registros e o golden set como experimento (issue #46, parcial). A mensagem que o portão de risco detecta vai só com as categorias. |
@@ -27,6 +28,10 @@ Os PRs abertos e a situação de cada um ficam na [lista de pull requests](https
 | 10/11/2026 | [#38](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/38) | Corpus: itálico e negrito colados às palavras não juntam mais palavras nos Trechos ("Alimentosin naturaou" vira "Alimentos in natura ou"); nomes de arquivo e URLs mantêm o `_`. Fecha a issue #36. |
 | 10/11/2026 | [#37](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/37) | Corpus: o CI passa a conferir os Trechos contra o manifesto e a origem (`geracao.json`); um `approval_status` alterado sem regenerar os Trechos faz o CI falhar. Fecha a issue #22. |
 | 08/11/2026 | [#33](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/33) | Busca: volta ao HNSW do ChromaDB com `ef` em 200, e o CI constrói o índice antes de medir o determinismo do benchmark. |
+
+## Semana 3 (20/11/2026)
+
+Comparação LLM x RAG, régua de avaliação revisada e escolha da configuração do produto. Veja [Entregas > Semana 3](entregas/semana-3.md).
 
 ## Semana 2 (09/11/2026)
 

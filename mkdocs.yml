@@ -101,6 +101,7 @@ nav:
   - Arquitetura (provisória): arquitetura.md
   - Entregas:
       - Semana 2 (RAG de Nutrição): entregas/semana-2.md
+      - Semana 3 (LLM x RAG): entregas/semana-3.md
       - Histórico de mudanças: historico.md
   - Qualidade:
       - Riscos: riscos.md
