@@ -20,7 +20,7 @@ Itens levantados na [entrega da semana 2](entregas/semana-2.md), atualizados em 
 - [x] Definir o **esquema do catálogo de fontes**: resolvido pelo `corpus/manifest.yaml` do CultivaProjetoFase1, que substitui o `sources.yaml` previsto
 - [x] Escolher os **embeddings** iniciais: `paraphrase-multilingual-MiniLM-L12-v2`, local, sem envio de texto a terceiros (RNF05)
 - [x] **Filtrar o índice por fonte aprovada**: só `approval_status: aprovado` entra por padrão (issue #7)
-- [ ] **Comparar modelos de embeddings** em português no golden set (issue #15)
+- [x] **Comparar modelos de embeddings** em português no golden set (issue #15): `multilingual-e5-large` escolhido ([PR #103](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/103), ADR 0006)
 - [ ] Decidir o **banco vetorial definitivo**: ChromaDB na implementação, pgvector na proposta
 - [x] **Aprovar as fontes**: 21 de 22 aprovadas no PR #31 (issue #8)
 - [ ] Decidir sobre a **SBAN**, pendente por possível conflito de interesse (material com marca da Nestlé)
@@ -36,3 +36,10 @@ Itens levantados na [entrega da semana 2](entregas/semana-2.md), atualizados em 
 - [x] Responder **"não sei"** sem recusar perguntas que o corpus responde (issue #6, [PR #51](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/51))
 - [ ] Definir os **critérios de busca e seleção de novas fontes** para o corpus (issue #47)
 - [ ] Revisar os **22 julgamentos de Trecho** acrescentados ao golden set v2 no [PR #42](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/42), ainda sem revisão humana
+
+## Sistema multiagentes e contexto
+
+- [ ] Aprovar em grupo o **ADR 0005** (arquitetura multiagentes), revisado em 25/11 com o projetor de contexto ([PR #113](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/113))
+- [ ] Implementar o **projetor de contexto e os Fatos do Usuário** ([issue #112](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/issues/112)), com critérios de avaliação escritos antes de medir
+- [ ] Revisar com a pessoa encarregada de proteção de dados a seção do **RIPD** sobre os Fatos do Usuário, que inclui condição de saúde (dado sensível), antes de qualquer uso com pessoas reais
+- [ ] Calibrar os valores marcados como proposta: **expiração dos fatos** (90 dias) e **orçamento do Histórico** (2.500 tokens, até 20 mensagens)
