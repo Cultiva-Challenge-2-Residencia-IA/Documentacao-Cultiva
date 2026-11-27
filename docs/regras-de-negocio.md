@@ -7,7 +7,7 @@ O que o sistema deve respeitar em **qualquer** funcionalidade.
 | ID | Regra |
 |---|---|
 | **RN01** | **Bloqueio de prescrição.** A IA é proibida de prescrever dietas fechadas (quantidades exatas e horários imutáveis), fichas de treino prescritivas ou realizar diagnósticos de saúde (física ou mental) |
-| **RN02** | **Alerta de orientação profissional.** Toda resposta que envolva sugestões de saúde, nutrição ou mudança drástica de rotina traz aviso padrão orientando consulta a profissional qualificado |
+| **RN02** | **Alerta de orientação profissional.** Todo pedido individual (dieta, dose, plano de treino, liberação de alimento) traz aviso curto de que a resposta é informação educativa e de qual profissional procurar |
 | **RN03** | **Redirecionamento para a vitrine.** Pergunta que exige avaliação individualizada (ex.: "Sinto dor no joelho ao correr, o que fazer?") recebe explicação de que a IA não diagnostica e sugestão de buscar um profissional |
 
 ## 2. Qualidade da informação e transparência
