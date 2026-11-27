@@ -1,0 +1,2396 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Empoderando pessoas com IA para compreender melhor, decidir melhor e viver melhor. Documentação do projeto do Grupo 12.">
+      
+      
+        <meta name="author" content="Equipe CULTIVA (Grupo 12)">
+      
+      
+        <link rel="canonical" href="https://cultiva-challenge-2-residencia-ia.github.io/Documentacao-Cultiva/entregas/semana-3/">
+      
+      
+        <link rel="prev" href="../semana-2/">
+      
+      
+        <link rel="next" href="../multimodal/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>Semana 3 (LLM x RAG) - CULTIVA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Krub:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Krub";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#semana-3-llm-x-rag" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="CULTIVA" class="md-header__button md-logo" aria-label="CULTIVA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23 4.1V2.3l-1.8-.2c-.1 0-.7-.1-1.7-.1-4.1 0-7.1 1.2-8.8 3.3C9.4 4.5 7.6 4 5.5 4c-1 0-1.7.1-1.7.1l-1.9.3.1 1.7c.1 3 1.6 8.7 6.8 8.7H9v3.4c-3.8.5-7 1.8-7 1.8v2h20v-2s-3.2-1.3-7-1.8V15c6.3-.1 8-7.2 8-10.9M12 18h-1v-5.6S10.8 9 8 9c0 0 1.5.8 1.9 3.7-.4.1-.8.1-1.1.1C4.2 12.8 4 6.1 4 6.1S4.6 6 5.5 6c1.9 0 5 .4 5.9 3.1C11.9 4.6 17 4 19.5 4c.9 0 1.5.1 1.5.1s0 9-6.3 9H14c0-2 2-5 2-5-3 1-3 4.9-3 4.9v5z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CULTIVA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Semana 3 (LLM x RAG)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Mudar para modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Mudar para modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Mudar para modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Mudar para modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/Documentacao-Cultiva" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Documentacao-Cultiva
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../projeto/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projeto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../regras-de-negocio/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Regras de Negócio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../requisitos/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Requisitos
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../arquitetura/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Arquitetura (provisória)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../semana-2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Entregas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../riscos/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Qualidade
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../decisoes/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Decisões
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../equipe/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Equipe
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CULTIVA" class="md-nav__button md-logo" aria-label="CULTIVA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23 4.1V2.3l-1.8-.2c-.1 0-.7-.1-1.7-.1-4.1 0-7.1 1.2-8.8 3.3C9.4 4.5 7.6 4 5.5 4c-1 0-1.7.1-1.7.1l-1.9.3.1 1.7c.1 3 1.6 8.7 6.8 8.7H9v3.4c-3.8.5-7 1.8-7 1.8v2h20v-2s-3.2-1.3-7-1.8V15c6.3-.1 8-7.2 8-10.9M12 18h-1v-5.6S10.8 9 8 9c0 0 1.5.8 1.9 3.7-.4.1-.8.1-1.1.1C4.2 12.8 4 6.1 4 6.1S4.6 6 5.5 6c1.9 0 5 .4 5.9 3.1C11.9 4.6 17 4 19.5 4c.9 0 1.5.1 1.5.1s0 9-6.3 9H14c0-2 2-5 2-5-3 1-3 4.9-3 4.9v5z"/></svg>
+
+    </a>
+    CULTIVA
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/Documentacao-Cultiva" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Documentacao-Cultiva
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../projeto/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projeto
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projeto
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projeto/problema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problema e Evidências
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projeto/stakeholders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stakeholders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projeto/personas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Personas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projeto/premissas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Premissas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../regras-de-negocio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regras de Negócio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../requisitos/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requisitos
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Requisitos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requisitos/funcionais/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funcionais (Software)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requisitos/ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funcionais (IA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requisitos/nao-funcionais/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Não Funcionais
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requisitos/backlog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backlog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arquitetura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitetura (provisória)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entregas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Entregas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../semana-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 2 (RAG de Nutrição)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 3 (LLM x RAG)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Semana 3 (LLM x RAG)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-o-que-foi-pedido-e-onde-esta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. O que foi pedido e onde está
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-metodologia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Metodologia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Metodologia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perguntas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ambiente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ambiente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nota-de-cada-resposta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nota de cada resposta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-estatistica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparação estatística
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-os-quatro-testes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Os quatro testes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-o-que-mudou-na-regua-nesta-semana" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. O que mudou na régua nesta semana
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Resultados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Resultados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nota-por-condicao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nota por condição
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#teste-pareado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Teste pareado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-escolha-para-o-produto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Escolha para o produto
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-testes-da-semana-que-sustentam-a-escolha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Testes da semana que sustentam a escolha
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-limitacoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Limitações
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Links
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Links">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-reproduzir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como reproduzir
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multimodal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entrega multimodal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../historico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Histórico de mudanças
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qualidade
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Qualidade
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../riscos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Riscos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metricas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Métricas de Sucesso
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../qualidade/modelo-local/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Escolha do modelo local
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisões
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisões
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decisoes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Registro de decisões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guiding-questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guiding Questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pendencias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pendências
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../equipe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Equipe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-o-que-foi-pedido-e-onde-esta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. O que foi pedido e onde está
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-metodologia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Metodologia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Metodologia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perguntas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perguntas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ambiente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ambiente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nota-de-cada-resposta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nota de cada resposta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparacao-estatistica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparação estatística
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-os-quatro-testes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Os quatro testes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-o-que-mudou-na-regua-nesta-semana" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. O que mudou na régua nesta semana
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Resultados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Resultados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nota-por-condicao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nota por condição
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#teste-pareado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Teste pareado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leitura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leitura
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-escolha-para-o-produto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Escolha para o produto
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-testes-da-semana-que-sustentam-a-escolha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Testes da semana que sustentam a escolha
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-limitacoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Limitações
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Links
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Links">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-reproduzir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Como reproduzir
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/Documentacao-Cultiva/edit/main/docs/entregas/semana-3.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="semana-3-llm-x-rag">Semana 3: LLM x RAG<a class="headerlink" href="#semana-3-llm-x-rag" title="Permanent link">&para;</a></h1>
+<p>Relatório da entrega de 20/11/2026: comparação entre a LLM sozinha e o RAG, régua de avaliação mais rigorosa e quatro formas de usar o RAG, com a escolha da configuração do produto. O código, os dados e o relatório gerado estão no <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/57">PR #57</a> do repositório CultivaProjetoFase1 (benchmark comparativo de respostas, de IngridHNobrega, com as correções da revisão). O documento técnico da entrega é o <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/docs/entrega-semana-3-llm-x-rag.md"><code>docs/entrega-semana-3-llm-x-rag.md</code></a>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Resultado em uma frase</p>
+<p>Com o modelo local <code>gemma4:e4b</code> (<a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/docs/adrs/0004-modelo-local-ollama.md">ADR 0004</a>), <strong>a LLM escrevendo sobre os Trechos é melhor que a síntese extrativa sem LLM</strong> (+0,09 na nota, diferença significativa). <strong>RAG e LLM sem RAG empatam</strong> na régua de termos. O RAG continua no produto porque só ele cita a fonte de cada frase (RN04).</p>
+</div>
+<h2 id="1-o-que-foi-pedido-e-onde-esta">1. O que foi pedido e onde está<a class="headerlink" href="#1-o-que-foi-pedido-e-onde-esta" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Exigência</th>
+<th>Entregue</th>
+<th>Onde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comparar o uso de LLM x RAG</td>
+<td>Mesmas 36 perguntas nas quatro condições, com teste pareado</td>
+<td>Seções 3 e 5</td>
+</tr>
+<tr>
+<td>Melhorar as métricas</td>
+<td>Régua com fatos essenciais, afirmações proibidas, segurança e fidelidade ao contexto; negação por frase; falhas de medição separadas; 16 casos do golden v2; intervalo de confiança e bootstrap pareado</td>
+<td>Seção 4</td>
+</tr>
+<tr>
+<td>Testar formas diferentes de usar o RAG (com e sem LLM)</td>
+<td>4 condições: sem RAG, RAG sem LLM, RAG com LLM e contexto ideal</td>
+<td>Seção 3</td>
+</tr>
+<tr>
+<td>Fazer 4 testes e escolher o melhor</td>
+<td>Escolhido o RAG com LLM local, citação por frase e guardrails, com a extrativa como último recurso</td>
+<td>Seção 6</td>
+</tr>
+<tr>
+<td>Relatório com testes, metodologia e links</td>
+<td>Esta página e o PDF da entrega</td>
+<td>Seção 9</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-metodologia">2. Metodologia<a class="headerlink" href="#2-metodologia" title="Permanent link">&para;</a></h2>
+<h3 id="perguntas">Perguntas<a class="headerlink" href="#perguntas" title="Permanent link">&para;</a></h3>
+<p>36 casos do split <code>dev</code>:</p>
+<ul>
+<li><strong>20 do gabarito de respostas</strong> (<a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/eval/golden/resposta/dev.json"><code>eval/golden/resposta/dev.json</code></a>), escritos e revisados à mão. Cada um tem fatos essenciais com peso, afirmações proibidas com gravidade e o comportamento esperado: responder, redirecionar uma prescrição ao nutricionista, abster-se por falta de evidência ou recusar o que está fora do escopo.</li>
+<li><strong>16 do golden v2</strong> (<a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/tree/main/eval/golden/v2/"><code>eval/golden/v2/</code></a>): as perguntas que devem ser respondidas e têm termos obrigatórios. Os Trechos julgados relevantes (nota ≥ 1) viram o contexto ideal, e a cobertura dos termos do v2 vira a completude. A pergunta repetida (V2-REC-01, igual à RESP-DIR-01) ficou de fora.</li>
+</ul>
+<p>O split <code>test</code> do gabarito de respostas (6 casos) não foi usado: ele ainda não passou por uma segunda revisão e fica guardado como holdout.</p>
+<h3 id="ambiente">Ambiente<a class="headerlink" href="#ambiente" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Modelo <code>gemma4:e4b</code> no Ollama local, com as opções de produção do ADR 0004: <code>think</code> desligado, <code>num_ctx</code> 8192, <code>num_predict</code> 2048 e temperatura 0,1.</li>
+<li>GPU RTX 5060 de 8 GB. A rodada levou cerca de 7 minutos e não teve nenhuma falha de medição.</li>
+<li>Mesmos guardrails da Lei 8.234/1991 em todas as condições.</li>
+</ul>
+<h3 id="nota-de-cada-resposta">Nota de cada resposta<a class="headerlink" href="#nota-de-cada-resposta" title="Permanent link">&para;</a></h3>
+<p>A régua (<code>avaliar_execucao</code> em <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/src/evaluation/benchmark_respostas.py"><code>src/evaluation/benchmark_respostas.py</code></a>) dá uma nota de 0 a 1 por resposta:</p>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th style="text-align: right;">Peso</th>
+<th>Como é medido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Correção factual</td>
+<td style="text-align: right;">0,35</td>
+<td>Desconta as afirmações proibidas (crítica zera, alta tira 0,5, outras 0,25) e cresce com a completude</td>
+</tr>
+<tr>
+<td>Completude</td>
+<td style="text-align: right;">0,30</td>
+<td>Fatos essenciais presentes, ponderados pelo peso de cada um (60% das palavras do fato na resposta). No golden v2, cobertura dos termos obrigatórios</td>
+</tr>
+<tr>
+<td>Relevância</td>
+<td style="text-align: right;">0,15</td>
+<td>Palavras da pergunta que aparecem na resposta</td>
+</tr>
+<tr>
+<td>Segurança</td>
+<td style="text-align: right;">0,20</td>
+<td>Redirecionou a prescrição, absteve-se quando devia, não montou cardápio com quantidades</td>
+</tr>
+</tbody>
+</table>
+<p>Se a resposta comete qualquer erro (afirmação proibida ou falha de segurança), a nota fica limitada a 0,4. Fidelidade ao contexto e validade das citações são medidas à parte e não entram na nota, porque a condição sem RAG não tem contexto nem citações.</p>
+<h3 id="comparacao-estatistica">Comparação estatística<a class="headerlink" href="#comparacao-estatistica" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Intervalo de confiança de 95% por condição</strong>, pela distribuição t de Student sobre as 36 notas.</li>
+<li><strong>Bootstrap pareado da diferença entre duas condições</strong> (10.000 reamostras, semente 55). As quatro condições respondem às mesmas perguntas, então a comparação certa é a diferença pergunta a pergunta. Se o intervalo da diferença contém o zero, é empate técnico. Comparar só a sobreposição dos intervalos de cada condição esconde diferenças reais.</li>
+</ul>
+<h2 id="3-os-quatro-testes">3. Os quatro testes<a class="headerlink" href="#3-os-quatro-testes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Condição</th>
+<th>O que o modelo recebe</th>
+<th>O que muda em relação ao produto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>llm_sem_rag</code></td>
+<td>Só a pergunta</td>
+<td>Sem busca: mede o que o modelo sabe sozinho. Linha de base, não é modo do produto</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>rag_extrativo</code></td>
+<td>Busca híbrida, sem LLM: a resposta copia frases dos Trechos</td>
+<td>Sem LLM: é o último recurso do produto quando o Ollama não está disponível</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>rag_atual</code></td>
+<td>O consultor completo: busca, TACO, grafo causal, citação por frase (#12) e guardrails</td>
+<td>É o que o usuário recebe</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>contexto_oracle</code></td>
+<td>Os Trechos certos do gabarito, sem busca</td>
+<td>Busca perfeita: mostra o teto da escrita e separa erro de busca de erro de síntese</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Por que muda:</strong></p>
+<ul>
+<li>Do 1 para o 3 entra a busca. A LLM passa a escrever a partir de Trechos aprovados e precisa citar cada frase; se uma citação falha, a resposta é bloqueada e vira a extrativa.</li>
+<li>Do 2 para o 3 entra a LLM. A extrativa só copia frases, então ela não junta informação de Trechos diferentes nem responde à pergunta com as próprias palavras.</li>
+<li>Do 3 para o 4 sai a busca. A diferença entre os dois é o quanto se perde por recuperar Trechos imperfeitos.</li>
+</ul>
+<h2 id="4-o-que-mudou-na-regua-nesta-semana">4. O que mudou na régua nesta semana<a class="headerlink" href="#4-o-que-mudou-na-regua-nesta-semana" title="Permanent link">&para;</a></h2>
+<p>A versão inicial do benchmark tinha problemas que distorciam a comparação. Foram corrigidos no PR #57:</p>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Correção</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uma negação em qualquer lugar da resposta anulava uma afirmação proibida em outra frase</td>
+<td>A negação só vale dentro da mesma frase da afirmação</td>
+</tr>
+<tr>
+<td>Erro ou tempo esgotado do LLM entrava como resposta ruim e derrubava a nota da condição</td>
+<td>As falhas de medição ficam fora da nota e aparecem à parte (zero nesta rodada)</td>
+</tr>
+<tr>
+<td>As condições sem RAG e com contexto ideal chamavam o modelo com opções diferentes das do produto</td>
+<td>Todas usam as opções do ADR 0004</td>
+</tr>
+<tr>
+<td>20 casos e só intervalos por condição</td>
+<td>36 casos com o golden v2 e bootstrap pareado</td>
+</tr>
+<tr>
+<td>Langfuse obrigatório e sem regra de destino</td>
+<td>Opcional (<code>--use-langfuse</code>), com destino local por padrão, como no ADR 0003</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-resultados">5. Resultados<a class="headerlink" href="#5-resultados" title="Permanent link">&para;</a></h2>
+<h3 id="nota-por-condicao">Nota por condição<a class="headerlink" href="#nota-por-condicao" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Condição</th>
+<th style="text-align: right;">Nota geral</th>
+<th>IC 95%</th>
+<th style="text-align: right;">Correção factual</th>
+<th style="text-align: right;">Completude</th>
+<th style="text-align: right;">Citações válidas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contexto ideal (<code>contexto_oracle</code>)</td>
+<td style="text-align: right;">0,613</td>
+<td>[0,50; 0,73]</td>
+<td style="text-align: right;">61,4%</td>
+<td style="text-align: right;">51,0%</td>
+<td style="text-align: right;">100%</td>
+</tr>
+<tr>
+<td>RAG atual (<code>rag_atual</code>)</td>
+<td style="text-align: right;">0,604</td>
+<td>[0,50; 0,71]</td>
+<td style="text-align: right;">62,5%</td>
+<td style="text-align: right;">42,8%</td>
+<td style="text-align: right;">16,7%</td>
+</tr>
+<tr>
+<td>LLM sem RAG (<code>llm_sem_rag</code>)</td>
+<td style="text-align: right;">0,581</td>
+<td>[0,48; 0,68]</td>
+<td style="text-align: right;">56,0%</td>
+<td style="text-align: right;">41,6%</td>
+<td style="text-align: right;">não se aplica</td>
+</tr>
+<tr>
+<td>RAG extrativo (<code>rag_extrativo</code>)</td>
+<td style="text-align: right;">0,517</td>
+<td>[0,41; 0,62]</td>
+<td style="text-align: right;">50,2%</td>
+<td style="text-align: right;">31,8%</td>
+<td style="text-align: right;">0%</td>
+</tr>
+</tbody>
+</table>
+<p>No RAG atual, das 36 respostas, 29 foram do LLM com citações válidas, 2 foram "não sei" do próprio LLM, 1 virou extrativa depois de uma citação inválida e 4 foram respostas fixas (risco, prompt injection ou "não sei" por estar fora do domínio).</p>
+<p>A coluna "citações válidas" do RAG atual <strong>não mede o produto</strong>. A checagem do benchmark procura o identificador do Trecho (por exemplo, <code>guia-alimentar-populacao-brasileira-2014-p048-01</code>) dentro do texto de cada citação, mas o consultor cita o documento e o rótulo <code>T#</code> com a página. Por isso, quase nenhuma citação do LLM é reconhecida. A conformidade das citações por frase é medida pelo verificador da #12 (seção 7). Corrigir essa checagem fica como pendência do benchmark.</p>
+<h3 id="teste-pareado">Teste pareado<a class="headerlink" href="#teste-pareado" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Comparação</th>
+<th>Todos (36)</th>
+<th>Golden v2 (16)</th>
+<th>Perguntas a responder (25)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RAG atual − LLM sem RAG</td>
+<td>+0,02 [−0,08; +0,12], empate</td>
+<td>+0,05 [−0,10; +0,20], empate</td>
+<td>+0,04 [−0,09; +0,16], empate</td>
+</tr>
+<tr>
+<td>Contexto ideal − LLM sem RAG</td>
+<td>+0,03 [−0,05; +0,12], empate</td>
+<td><strong>+0,16 [+0,06; +0,27]</strong></td>
+<td>+0,08 [−0,03; +0,19], empate</td>
+</tr>
+<tr>
+<td>RAG atual − RAG extrativo</td>
+<td><strong>+0,09 [+0,03; +0,15]</strong></td>
+<td><strong>+0,07 [+0,01; +0,15]</strong></td>
+<td><strong>+0,10 [+0,03; +0,18]</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Em negrito, as diferenças em que o intervalo não contém o zero.</p>
+<h3 id="leitura">Leitura<a class="headerlink" href="#leitura" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>A LLM sobre os Trechos é melhor que a extrativa.</strong> É o único resultado firme em todos os recortes. Ele justifica a LLM no produto, com a extrativa só como último recurso.</li>
+<li><strong>RAG e LLM sem RAG empatam.</strong> Pela régua de termos, o <code>gemma4:e4b</code> responde boa parte destas perguntas com o próprio conhecimento.</li>
+<li><strong>O contexto ideal ajuda no golden v2</strong> (+0,16 sobre o LLM sem RAG). O RAG atual fica no meio: 0,84, contra 0,95 do contexto ideal. A distância até o teto é o que se perde na busca e na síntese.</li>
+<li><strong>No gabarito escrito à mão, o contexto ideal não ganha nem do LLM sem RAG.</strong> Ele recebe os Trechos certos, então isso aponta um limite da régua: uma resposta correta com outras palavras perde ponto.</li>
+</ol>
+<h2 id="6-escolha-para-o-produto">6. Escolha para o produto<a class="headerlink" href="#6-escolha-para-o-produto" title="Permanent link">&para;</a></h2>
+<p><strong>Fica a configuração atual: RAG híbrido com a LLM local do ADR 0004, citação por frase com bloqueio (#12), guardrails da Lei 8.234/1991 e síntese extrativa como último recurso.</strong></p>
+<ul>
+<li>O ganho da LLM sobre a extrativa foi medido e é significativo.</li>
+<li>O RAG não ganhou do LLM sem RAG na nota, mas é o único que permite citar a fonte de cada frase, um requisito do produto (RN04, RF-IA01). Sem RAG, a resposta pode estar certa, mas ninguém consegue conferir de onde ela veio.</li>
+<li>A distância entre o RAG atual e o contexto ideal no golden v2 indica onde melhorar: a busca.</li>
+</ul>
+<h2 id="7-testes-da-semana-que-sustentam-a-escolha">7. Testes da semana que sustentam a escolha<a class="headerlink" href="#7-testes-da-semana-que-sustentam-a-escolha" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Teste</th>
+<th>Resultado</th>
+<th>Registro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Escolha do modelo local: 5 modelos do Ollama com juiz às cegas (#55)</td>
+<td><code>gemma4:e4b</code> com 94,1% de fidelidade aos Trechos, contra 71,0% do <code>qwen2.5:7b</code>, e 3,2 s por resposta</td>
+<td><a href="../../qualidade/modelo-local/">Escolha do modelo local</a>, <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/70">PR #70</a></td>
+</tr>
+<tr>
+<td>Conformidade das citações por frase com o prompt atual</td>
+<td><code>gemma4:e4b</code> 88,0%, <code>qwen2.5:7b</code> 92,3%</td>
+<td><a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/docs/adrs/0004-modelo-local-ollama.md">ADR 0004</a>, <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/80">PR #80</a></td>
+</tr>
+<tr>
+<td>Limite de saída do modelo</td>
+<td>Com <code>num_predict</code> 1024, o gemma truncava o JSON das citações; o produto passou a 2048</td>
+<td><a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/80">PR #80</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-limitacoes">8. Limitações<a class="headerlink" href="#8-limitacoes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>A régua é por termos.</strong> Ela confere palavras, não entende a resposta. Isso explica o contexto ideal abaixo do LLM sem RAG no gabarito escrito à mão.</li>
+<li><strong>A régua não mede fundamentação.</strong> O LLM sem RAG pode acertar sem ter de onde tirar a informação. A fidelidade do conteúdo do gemma com o prompt de citação por frase ainda está aberta (#67, fidelidade do gemma com citação por frase).</li>
+<li><strong>Amostra pequena:</strong> 36 casos, 25 deles a responder. Diferenças menores que uns 10 pontos não se separam do ruído.</li>
+<li><strong>Temperatura 0,1:</strong> duas execuções seguidas não são idênticas. Na mesma configuração, a nota do RAG atual nos 20 casos do gabarito variou de 0,433 para 0,418.</li>
+<li><strong>O <code>test</code> do gabarito de respostas</strong> ainda não foi revisado nem rodado.</li>
+</ul>
+<p><strong>Próximo passo para a régua:</strong> um juiz LLM às cegas, como o da #55, que julgue se cada afirmação é correta frente aos Trechos de referência.</p>
+<h2 id="9-links">9. Links<a class="headerlink" href="#9-links" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Repositório de código: <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1">CultivaProjetoFase1</a></li>
+<li><a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/57">PR #57: benchmark comparativo LLM x RAG com teste pareado e gemma4:e4b</a>, com:<ul>
+<li>o benchmark em <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/src/evaluation/benchmark_respostas.py"><code>src/evaluation/benchmark_respostas.py</code></a>;</li>
+<li>o gabarito em <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/tree/main/eval/golden/resposta/"><code>eval/golden/resposta/</code></a>;</li>
+<li>o relatório gerado em <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/eval/runs/respostas/relatorio_respostas_comparativo.md"><code>eval/runs/respostas/relatorio_respostas_comparativo.md</code></a>;</li>
+<li>o documento técnico em <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/docs/entrega-semana-3-llm-x-rag.md"><code>docs/entrega-semana-3-llm-x-rag.md</code></a>.</li>
+</ul>
+</li>
+<li><a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/eval/golden/v2/README.md">Golden v2</a></li>
+<li><a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/blob/main/docs/adrs/0004-modelo-local-ollama.md">ADR 0004: modelo local do Ollama</a></li>
+<li>Página da <a href="../../qualidade/modelo-local/">escolha do modelo local</a></li>
+</ul>
+<h3 id="como-reproduzir">Como reproduzir<a class="headerlink" href="#como-reproduzir" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>sync
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># Sem LLM (determinístico; as condições com LLM viram respostas fixas)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>src.evaluation.benchmark_respostas<span class="w"> </span>--split<span class="w"> </span>dev<span class="w"> </span>--no-llm
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Com o modelo local e os 16 casos do golden v2 (cerca de 7 min numa RTX 5060)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>src.evaluation.benchmark_respostas<span class="w"> </span>--split<span class="w"> </span>dev<span class="w"> </span>--use-ollama<span class="w"> </span>--incluir-golden-v2
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../semana-2/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Semana 2 (RAG de Nutrição)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Semana 2 (RAG de Nutrição)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../multimodal/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Entrega multimodal">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                Entrega multimodal
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe CULTIVA &middot; Grupo 12
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/Cultiva-Challenge-2-Residencia-IA/Documentacao-Cultiva" target="_blank" rel="noopener" title="Repositório no GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
