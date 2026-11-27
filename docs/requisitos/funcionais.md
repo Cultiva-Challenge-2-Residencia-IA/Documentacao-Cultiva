@@ -9,8 +9,8 @@
 | RF-A05 | Definir perfil e metas iniciais por aba (vegetariano, restrição alimentar, treino sem equipamento etc.) | Essencial | Ao menos uma meta por aba ativa; metas e preferências editáveis depois |
 | RF-A06 | Ativar e desativar abas | Importante | Aba desativada não aparece em "Meu dia" nem é usada pelos agentes |
 | RF-A07 | Registrar hábitos manualmente em Nutrição, Saúde Física e Estudos | Essencial | Registro salvo com data e hora e visível em "Meu dia" |
-| RF-A08 | Registrar por foto (câmera ou galeria) | Importante | A foto gera uma interpretação que vai para a confirmação (RF-A10), sem salvar direto |
-| RF-A09 | Registrar por áudio | Importante (confirmar escopo) | Áudio é transcrito e o texto vai para a confirmação (RF-A10) |
+| RF-A08 | Registrar por foto (câmera ou galeria) | Importante (foto de prato no [Backlog](backlog.md)) | A foto gera uma interpretação que vai para a confirmação (RF-A10), sem salvar direto. Na [entrega multimodal](../entregas/multimodal.md) (30/11/2026), cobre foto de rótulo nutricional e foto de documento impresso; foto de refeição/prato foi retirada do escopo atual e movida para o backlog (`RF-B04`, decisão de 27/11/2026) |
+| RF-A09 | Registrar por áudio | Importante (fora da entrega de 30/11/2026; confirmar escopo) | Áudio é transcrito e o texto vai para a confirmação (RF-A10). Não coberto na entrega multimodal de 30/11/2026 |
 | RF-A10 | Mostrar o que a IA entendeu (foto, áudio ou PDF) antes de salvar, com opção de corrigir ou descartar | Essencial | **Nenhum registro vindo de foto, áudio ou PDF é salvo sem confirmação explícita** |
 | RF-A11 | Editar e apagar registros | Essencial | Alteração aparece em "Meu dia", resumos e relatórios; exclusão pede confirmação |
 | RF-A12 | Tela "Meu dia" com as três abas e o progresso das metas | Essencial | Registros do dia juntos, por aba; estado vazio quando não há registros |

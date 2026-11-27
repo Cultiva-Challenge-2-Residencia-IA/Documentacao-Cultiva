@@ -14,8 +14,8 @@
 | RNF10 | Monitoramento | Acompanhar respostas sinalizadas como incorretas | Importante | Revisão semanal; alta acima de 5 p.p. dispara revisão |
 | RNF11 | Acessibilidade | Contraste, tamanho de fonte e leitor de tela | Importante | WCAG 2.1 nível AA |
 | RNF12 | Conformidade | LGPD: consentimento específico para dados sensíveis, RIPD e encarregado (DPO) | Essencial | Base legal, finalidade, RIPD e DPO documentados |
-| RNF13 | Justiça | Reconhecer pratos brasileiros e regionais | Importante | Diferença ≤ 5 p.p. entre regionais e comuns |
-| RNF14 | Justiça | Entender regionalismos e sotaques no áudio | Importante | WER ≤ 15% em todos os sotaques do conjunto de teste |
+| RNF13 | Justiça | Reconhecer pratos brasileiros e regionais | Movido com foto de prato para o [Backlog](backlog.md) | Diferença ≤ 5 p.p. entre regionais e comuns (movido para o backlog `RF-B04` com a foto de prato por decisão de 27/11/2026; ver [Registro de decisões](../decisoes.md)) |
+| RNF14 | Justiça | Entender regionalismos e sotaques no áudio | Importante (fora da entrega de 30/11/2026) | WER ≤ 15% em todos os sotaques do conjunto de teste (não coberto na entrega multimodal de 30/11/2026) |
 | RNF15 | Privacidade | Remover metadados das fotos antes do envio | Essencial | 100% das imagens sem metadados |
 | RNF16 | Privacidade | Desfocar ou recusar rostos e documentos nas fotos | Essencial | Zero rostos ou documentos legíveis enviados |
 | RNF17 | Desempenho | Tempo de processamento de foto | Importante | p95 ≤ 10 s |

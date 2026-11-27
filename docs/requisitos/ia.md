@@ -13,8 +13,8 @@
 | RF-IA09 | Agente sincronizador: integra as áreas ativas compartilhando só o contexto necessário, conciliando demandas concorrentes | Importante | Resumo concilia as recomendações; logs mostram que nenhum agente recebeu dados de abas desnecessárias; 100% das informações conferem com os registros |
 | RF-IA10 | Tom acolhedor e não culpabilizador (sem julgamento, comparação ou pressão) | Essencial | ≥ 95% das respostas aprovadas na rubrica de tom |
 | RF-IA11 | Estimar porções e nutrientes sempre em faixa, nunca valor exato, sem metas calóricas | Essencial (Nutrição) | Ex.: "entre 500 e 700 kcal", marcada como aproximada |
-| RF-IA12 | Interpretar foto de refeição ou atividade, indicando incerteza e pedindo ajuda quando a confiança for baixa | Importante | Itens de baixa confiança sinalizados; meta de acerto a definir |
-| RF-IA13 | Transcrever áudio e exibir o texto para revisão antes de salvar | Importante | Texto exibido e editável; qualidade medida no RNF14 |
+| RF-IA12 | Interpretar foto de refeição ou atividade, indicando incerteza e pedindo ajuda quando a confiança for baixa | Foto de refeição no [Backlog](backlog.md); atividade fora da entrega de 30/11/2026 | Itens de baixa confiança sinalizados; meta de acerto a definir. Foto de refeição/prato retirada do escopo atual e movida para o backlog (`RF-B04`, decisão de 27/11/2026; ver [Registro de decisões](../decisoes.md)); foto de atividade segue não coberta na [entrega multimodal](../entregas/multimodal.md) |
+| RF-IA13 | Transcrever áudio e exibir o texto para revisão antes de salvar | Importante (fora da entrega de 30/11/2026) | Texto exibido e editável; qualidade medida no RNF14. Não coberto na entrega multimodal de 30/11/2026 |
 | RF-IA14 | Ler PDF enviado para montar plano ou resumo, sem alterar orientações de profissionais | Importante | ≥ 80% das saídas fiéis ao material (revisão humana); nenhuma orientação modificada ou contradita |
 | RF-IA15 | Permitir sinalizar uma resposta como incorreta, com comentário opcional | Essencial | Botão em 100% das respostas explicativas; guarda versão do prompt, do modelo e das fontes |
 

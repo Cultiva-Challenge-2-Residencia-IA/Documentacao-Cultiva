@@ -43,3 +43,13 @@ Itens levantados na [entrega da semana 2](entregas/semana-2.md), atualizados em 
 - [ ] Implementar o **projetor de contexto e os Fatos do Usuário** ([issue #112](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/issues/112)), com critérios de avaliação escritos antes de medir
 - [ ] Revisar com a pessoa encarregada de proteção de dados a seção do **RIPD** sobre os Fatos do Usuário, que inclui condição de saúde (dado sensível), antes de qualquer uso com pessoas reais
 - [ ] Calibrar os valores marcados como proposta: **expiração dos fatos** (90 dias) e **orçamento do Histórico** (2.500 tokens, até 20 mensagens)
+
+## Entrega multimodal (30/11/2026)
+
+Itens levantados na [entrega multimodal](entregas/multimodal.md) ([PR #101](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/101), [PR #102](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/102) e [PR #122](https://github.com/Cultiva-Challenge-2-Residencia-IA/CultivaProjetoFase1/pull/122)).
+
+- [x] **Saída da foto de prato do escopo atual e passagem para o [Backlog](requisitos/backlog.md)** (`RF-B04`, decisão confirmada em 27/11/2026 a partir da proposta de 24/11/2026): **RF-A08** (no que se refere a foto de refeição), **RF-IA12** (parte de refeição; foto de atividade segue fora desta entrega) e **RNF13** ficam fora do escopo atual, mantendo-se no escopo apenas foto de rótulo nutricional e foto de documento impresso (registrado em [Registro de decisões](decisoes.md))
+- [ ] Definir escopo e prazo para o **áudio** (**RF-IA13** e **RNF14**, além do **RF-A09** listado acima): **não coberto** na entrega multimodal de 30/11/2026 por falta de tempo para registrar critérios e medir WER por sotaque antes do prazo
+- [ ] Confirmar em grupo a regra proposta no PDF (#95) de **atribuir a orientação do profissional sem reescrevê-la**
+- [ ] Reavaliar **fidelidade e cobertura** após as correções de revisão dos PRs #101 e #102 (checagem de unidade junto com o número e portões na pergunta sobre PDF/foto): zero número alterado continua valendo, mas fidelidade e cobertura podem ter mudado e não foram medidas de novo
+- [ ] Medir **fotos reais de embalagens** (além das sintéticas) e melhorar a **fidelidade da explicação do rótulo com o corpus**, que ficou em 78,6% (11/14 frases), abaixo da meta de 80%
